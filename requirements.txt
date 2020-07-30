@@ -1,2 +1,3 @@
 flask
+flask-cors
 opentok>=2.10.0
