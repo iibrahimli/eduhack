@@ -76,6 +76,16 @@ class Database:
 
 
     def get_user_data(self, username):
+        """
+        Query user data by username
+
+        Args:
+            username (str): Username
+        
+        Returns:
+            dict, User data
+        """
+
         cur = self.conn.cursor()
         cur.execute("SELECT * FROM users WHERE username=?", (username,))
         rows = cur.fetchall()
