@@ -81,4 +81,9 @@ class Database:
         rows = cur.fetchall()
         if not rows:
             return None
-        return rows[0]
+        return {
+            "id": rows[0][0],
+            "username": rows[0][1],
+            "password": rows[0][2],
+            "is_examiner": bool(rows[0][3]),
+        }
