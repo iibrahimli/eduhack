@@ -2,7 +2,9 @@ import os
 import time
 import json
 from flask import Flask, request, abort, jsonify
+from flask_cors import CORS
 from configparser import ConfigParser
+
 
 from database import Database
 
@@ -37,9 +39,10 @@ for acc in default_accounts:
 
 # init flask app
 app = Flask(__name__)
+cors = CORS(app)
 
 
-# ============= flask routes =============
+# ============= endpoints =============
 
 @app.route('/api/auth', methods=["POST"])
 def auth():
@@ -69,14 +72,16 @@ def auth():
         return abort(406)
     
     user_data = db.get_user_data(username)
-    
+
     if user_data is not None and password == user_data["password"]:
         return jsonify({
             "correct": True,
+            "user_id": user_data["id"],
             "is_examiner": user_data["is_examiner"]
         })
     else:
         return jsonify({
             "correct": False,
+            "user_id": -1,
             "is_examiner": False
         })
