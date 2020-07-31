@@ -7,15 +7,18 @@ from configparser import ConfigParser
 
 
 from database import Database
+# from tokserver import OpenTokServer
 
 
 def parse_default_accounts(config):
     usernames = config.get('users', 'usernames').split(',')
+    disp_names = config.get('users', 'disp_names').split(',')
     passwords = config.get('users', 'passwords').split(',')
     status = config.get('users', 'is_examiner').split(',')
     return [
-        (uname, upass, is_exm) for uname, upass, is_exm in zip(
+        (uname, disp_name, upass, is_exm) for uname, disp_name, upass, is_exm in zip(
             map(str.strip, usernames),
+            map(str.strip, disp_names),
             map(str.strip, passwords),
             map(str.strip, status)
         )
@@ -37,6 +40,9 @@ default_accounts = parse_default_accounts(config)
 for acc in default_accounts:
     db.create_user(*acc)
 
+# init opentok server
+# TODO
+
 # init flask app
 app = Flask(__name__)
 cors = CORS(app)
@@ -57,7 +63,10 @@ def auth():
 
     Response (JSON):
     {
-        "correct": true,
+        "success": true,
+        "user_id": 3,
+        "display_name": "Kamal Agayev",
+        "initials": "KA",
         "is_examiner": false
     }
     """
@@ -73,15 +82,75 @@ def auth():
     
     user_data = db.get_user_data(username)
 
-    if user_data is not None and password == user_data["password"]:
+    if user_data is not None and \
+       password == user_data["password"] and \
+       user_data["in_session"] is None:
         return jsonify({
-            "correct": True,
+            "success": True,
             "user_id": user_data["id"],
+            "display_name": user_data["display_name"],
+            "initials": user_data["initials"],
             "is_examiner": user_data["is_examiner"]
         })
     else:
         return jsonify({
-            "correct": False,
-            "user_id": -1,
-            "is_examiner": False
+            "success": False
         })
+
+
+@app.route('/api/session/create', methods=["POST"])
+def create_session():
+    """
+    Create a session.
+
+    Request (JSON):
+    {
+        "username": "examiner",
+        "session_password": "p@ssw0rd"
+    }
+
+    Response (JSON):
+    {
+        "success": true,
+        "session_id": 165432114,
+        "session_token": "cas5c45as4d"
+    }
+    """
+
+    if not request or request.method != "POST":
+        return abort(405)
+
+    username = request.json.get("username")
+    session_password = request.json.get("session_password")
+
+    if username is None or session_password is None:
+        return abort(406)
+    
+    user_data = db.get_user_data(username)
+
+    if user_data is not None and \
+       user_data["is_examiner"] is True:
+        return jsonify({
+            "success": True,
+            "user_id": user_data["id"],
+            "display_name": user_data["display_name"],
+            "initials": user_data["initials"],
+            "is_examiner": user_data["is_examiner"]
+        })
+    else:
+        return jsonify({
+            "success": False,
+        })
+
+
+@app.route('/api/monitor', methods=["POST"])
+def monitor():
+    """
+    OpenTok stream events monitoring
+    https://tokbox.com/developer/guides/session-monitoring/
+    """
+
+    if not request or request.method != "POST":
+        return abort(405)
+
+    return jsonify({'success':True}), 200, {'ContentType':'application/json'}
