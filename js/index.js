@@ -55,7 +55,7 @@ if (join_sess_button) {
         let username = cookies['username']; 
         let password = cookies['password'];
         let session_id = document.getElementById("sess_id").value;
-        let sess_password = document.getElementById("sess_password").value;
+        let sess_password = document.getElementById("join_sess_password").value;
     
         let data = {"username": username,
                     "password": password,
@@ -87,7 +87,7 @@ if (create_sess_button) {
     create_sess_button.onclick = function() {
         let username = cookies['username']; 
         let password = cookies['password'];
-        let sess_password = document.getElementById("sess_password").value;
+        let sess_password = document.getElementById("create_sess_password").value;
     
         let data = {"username": username, 
                     "password": password,
@@ -158,7 +158,7 @@ if (ul) {
         setTimeout(add_participants, 10000); // Do this every 10 seconds
     }
 
-    // add_participants();
+    add_participants();
 }
 
 let session_id_p = document.getElementById('session_id');

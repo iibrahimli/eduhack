@@ -1,6 +1,6 @@
 import{parse_cookies} from "./utils.js";
 
-cookies = parse_cookies(document.cookie);
+let cookies = parse_cookies(document.cookie);
 
 let api_key = '46869784';
 let session_id = cookies['session_id'];
@@ -16,6 +16,7 @@ function handleError(error) {
 }
 
 function initializeSession(api_key, session_id) {
+    console.log("initializing");
     var session = OT.initSession(api_key, session_id);
 
     // Subscribe to a newly created stream
@@ -41,6 +42,7 @@ function initializeSession(api_key, session_id) {
             handleError(error);
         } else {
             session.publish(publisher, handleError);
+            console.log("publishing");
         }
     });
 }
