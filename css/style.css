@@ -127,7 +127,7 @@
 /* ----------------------------------------THIRD PAGE ----------------------------------------------*/
 
 hr {
-    width: 350px;
+    /* width: 350px; */
     margin: 15px;
 }
 
@@ -136,7 +136,7 @@ hr {
 .all-menu {
     display: flex;
     flex-direction: row;
-    background-color: #e4e3e3 ;
+    background-color: #e4e3e3;
 }
 .left-sidebar {
     display: flex;
@@ -150,7 +150,7 @@ h3 {
     text-align: center;
 }
 hr {
-    width: 190px;
+    /* width: 190px; */
     margin: 5px;
 }
 ul li{
