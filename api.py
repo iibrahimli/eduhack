@@ -55,9 +55,8 @@ db_path = config.get('db', 'path')
 VERBOSE = config.getboolean('general', 'debug')
 
 # init database
-if os.path.exists(db_path):
-    os.remove(db_path)
 db = Database(db_path)
+db.clear_sessions()
 log("Initialized database")
 
 # create default users if don't exist

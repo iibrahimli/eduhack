@@ -77,6 +77,20 @@ class Database:
             print(e)
     
 
+    def clear_sessions(self):
+        try:
+            cur = self.conn.cursor()
+            cur.execute("DELETE FROM sessions;")
+            cur.execute("""
+                UPDATE users
+                SET in_session = null ,
+                    session_token = null
+            """)
+            self.conn.commit()
+        except Error as e:
+            print(e)
+    
+
     def create_user(self, username, display_name, password, is_examiner=False):
         """
         Create a user if does not exist
