@@ -84,7 +84,7 @@ class Database:
             cur.execute("""
                 UPDATE users
                 SET in_session = null ,
-                    session_token = null
+                    session_token = null;
             """)
             self.conn.commit()
         except Error as e:
@@ -240,3 +240,30 @@ class Database:
         )
         self.conn.commit()
         return True
+    
+
+    def logout_user(self, username):
+        """
+        Add a user to given session
+
+        Args:
+            username (str): Username
+            session_id (str): Session ID
+            session_token: (str): Session token
+        
+        Returns:
+            bool, Success
+        """
+
+        user_data = self.get_user_data(username)
+        if user_data is None or session_data is None:
+            return False
+        cur = self.conn.cursor()
+        cur.execute("""
+            UPDATE users
+            SET in_session = null ,
+                session_token = null
+            WHERE username = ? ;
+        """, (username,))
+        self.conn.commit()
+        return (user_data["in_session"] is not None)

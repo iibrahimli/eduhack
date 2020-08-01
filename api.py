@@ -125,6 +125,42 @@ def auth():
         })
 
 
+@app.route('/api/logout', methods=["POST"])
+def logout():
+    """
+    Log a user out.
+
+    Request (JSON):
+    {
+        "username": "user1",
+        "password": "pass1"
+    }
+
+    Response (JSON):
+    {
+        "success": true
+    }
+    """
+
+    if not request or request.method != "POST":
+        return abort(405)
+
+    username = request.json.get("username")
+    password = request.json.get("password")
+
+    if username is None or password is None:
+        return abort(406)
+    
+    user_data = db.get_user_data(username)
+
+    log(f"Logout requested for {username}:{password}")
+
+    return jsonify({
+        "success": (auth_user(db, username, password) and \
+                    db.logout_user(username))
+    })
+
+
 @app.route('/api/session/create', methods=["POST"])
 def create_session():
     """
