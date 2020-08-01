@@ -272,5 +272,6 @@ ul li{
     margin: 10px;
 }
 
-
-
+#session_id {
+    word-wrap: break-word;
+}

@@ -120,20 +120,20 @@ window.add_participant_to_ul = function add_participant_to_ul(ul, participant) {
     li.className = (participant['is_examiner']) ? 'examiner' : 'student';
     li.id = participant['user_id'];
     ul.appendChild(li);
+    return true;
 }
 
 let ul = document.getElementById('participant_list');
 if (ul) {
     function remove_participants() {
         let current_participants = ul.getElementsByTagName('li');
-        for (let i = 0; i < current_participants.length; ++i) {
-           ul.removeChild(current_participants[i]); 
+        for (let i = current_participants.length - 1; i >= 0; --i) {
+            ul.removeChild(current_participants[i]); 
         }
+        return current_participants;
     }
 
     function add_participants() {
-        remove_participants();
-
         let session_id = cookies['session_id'];
         let sess_password = cookies['session_password'];
          
@@ -151,8 +151,11 @@ if (ul) {
             if (data['success'] === false) { 
                 console.log('There was a problem getting participant list for the session');
             } else {
+                remove_participants();
                 let users = data['users'];
-                add_participant(ul, );
+                for (let i = 0; i < users.length; ++i) {
+                    add_participant_to_ul(ul, users[i]);
+                }
             }
         });
         setTimeout(add_participants, 10000); // Do this every 10 seconds

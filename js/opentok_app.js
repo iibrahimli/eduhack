@@ -16,7 +16,6 @@ function handleError(error) {
 }
 
 function initializeSession(api_key, session_id) {
-    console.log("initializing");
     var session = OT.initSession(api_key, session_id);
 
     // Subscribe to a newly created stream
@@ -36,13 +35,12 @@ function initializeSession(api_key, session_id) {
     }, handleError);
 
     // Connect to the session
-    session.connect(token, function(error) {
+    session.connect(session_token, function(error) {
         // If the connection is successful, publish to the session
         if (error) {
             handleError(error);
         } else {
             session.publish(publisher, handleError);
-            console.log("publishing");
         }
     });
 }
