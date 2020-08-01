@@ -1,5 +1,4 @@
 import{parse_cookies} from "./utils.js";
-console.log('ok');
 
 let website_url = 'http://34.70.53.112';
 let api_port = 8000;
@@ -29,6 +28,8 @@ if (join_sess_button) {
             if (data['success'] === false) {
                 console.log('Incorrect Session ID or Session Password');
             } else {
+                document.cookie = 'session_id=' + data['session_id'];
+                document.cookie = 'session_token=' + data['session_token'];
                 window.location.href = website_url + '/index/index4.html';
             }
         });
@@ -58,6 +59,8 @@ if (create_sess_button) {
             if (data['success'] === false) { 
                 console.log('There was a problem creating a session');
             } else {
+                document.cookie = 'session_id=' + data['session_id'];
+                document.cookie = 'session_token=' + data['session_token'];
                 window.location.href = website_url + '/index/index4.html';
             }
         });
