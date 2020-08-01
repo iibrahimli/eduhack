@@ -9,10 +9,14 @@ if (join_sess_button) {
     join_sess_button.onclick = function() {
         let cookies = parse_cookies(document.cookie);
         let username = cookies['username']; 
+        let password = cookies['password'];
         let session_id = document.getElementById("sess_id").value;
-        let password = document.getElementById("sess_password").value;
+        let session_password = document.getElementById("sess_password").value;
     
-        let data = {"session_id": session_id, "session_password": password};
+        let data = {"username": username,
+                    "password": password,
+                    "session_id": session_id, 
+                    "session_password": session_password};
         fetch(website_url + ":" + api_port + "/api/session/join", {
             method: "POST",
             headers: {
@@ -36,9 +40,12 @@ if (create_sess_button) {
     create_sess_button.onclick = function() {
         let cookies = parse_cookies(document.cookie);
         let username = cookies['username']; 
+        let password = cookies['password'];
         let password = document.getElementById("sess_password").value;
     
-        let data = {"username": username, "session_password": password};
+        let data = {"username": username, 
+                    "password": passwrod,
+                    "session_password": password};
         fetch(website_url + ":" + api_port + "/api/session/create", {
             method: "POST",
             headers: {
