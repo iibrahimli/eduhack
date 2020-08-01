@@ -5,7 +5,7 @@ from sqlite3 import Error
 _queries = {
     'create_users_table': """
         CREATE TABLE IF NOT EXISTS users (
-            id integer PRIMARY KEY AUTOINCREMENT,
+            user_id integer PRIMARY KEY AUTOINCREMENT,
             username text NOT NULL,
             display_name text NOT NULL,
             initials text NOT NULL,
@@ -18,7 +18,7 @@ _queries = {
 
     'create_sessions_table': """
         CREATE TABLE IF NOT EXISTS sessions (
-            id text PRIMARY KEY,
+            session_id text PRIMARY KEY,
             password text NOT NULL,
             creator_id integer NOT NULL
         );
@@ -33,10 +33,17 @@ _queries = {
     
     'create_session': """
         INSERT INTO sessions
-            (id, password, creator_id)
+            (session_id, password, creator_id)
             VALUES
             (?, ?, ?)
-        """
+        """,
+    
+    'add_user_to_session': """
+        UPDATE users
+            SET in_session = ? ,
+                session_token = ?
+            WHERE username = ?
+        """,
 }
 
 
@@ -105,12 +112,12 @@ class Database:
         """
 
         cur = self.conn.cursor()
-        cur.execute("SELECT * FROM users WHERE username=?", (username,))
+        cur.execute("SELECT * FROM users WHERE username = ?", (username,))
         rows = cur.fetchall()
         if not rows:
             return None
         return {
-            "id": rows[0][0],
+            "user_id": rows[0][0],
             "username": rows[0][1],
             "display_name": rows[0][2],
             "initials": rows[0][3],
@@ -121,9 +128,9 @@ class Database:
         }
 
 
-    def create_session(self, username, session_id, session_password):
+    def add_session(self, username, session_id, session_password):
         """
-        Create a session if does not exist
+        Add a session if does not exist
         
         Args:
             username (str): Username
@@ -136,7 +143,7 @@ class Database:
 
         cur = self.conn.cursor()
         user_data = self.get_user_data(username)
-        creator_id = user_data["id"]
+        creator_id = user_data["user_id"]
         if user_data is not None and \
            user_data["is_examiner"] is True and \
            user_data["in_session"] is None:
@@ -146,13 +153,13 @@ class Database:
             )
             self.conn.commit()
             return {
-                "id": session_id,
+                "session_id": session_id,
                 "password": session_password,
                 "creator_id": creator_id
             }
         else:
             return None
-
+    
 
     def get_session_data(self, session_id):
         """
@@ -162,18 +169,60 @@ class Database:
             session_id (str): Session ID
         
         Returns:
-            dict, Session data
+            dict, Session data or None if not available
         """
 
         cur = self.conn.cursor()
-        cur.execute("SELECT * FROM users WHERE username=?", (username,))
-        rows = cur.fetchall()
-        if not rows:
+        cur.execute("SELECT * FROM sessions WHERE session_id = ?", (session_id,))
+        sess_rows = cur.fetchall()
+
+        cur = self.conn.cursor()
+        cur.execute("SELECT * FROM users WHERE in_session = ?", (session_id,))
+        user_rows = cur.fetchall()
+        
+        if not sess_rows or len(sess_rows) != 1:
             return None
-        return {
-            "id": rows[0][0],
-            "username": rows[0][1],
-            "password": rows[0][2],
-            "is_examiner": bool(rows[0][3]),
-            "in_session": rows[0][4]
+        
+        sess_row = sess_rows[0]
+        sess_data = {
+            "session_id": session_id,
+            "password": sess_row[1],
+            "creator_id": sess_row[2],
+            "users": []
         }
+
+        for row in user_rows:
+            sess_data["users"].append({
+                "user_id": row[0],
+                "display_name": row[2],
+                "initials": row[3],
+                "is_examiner": bool(row[5]),
+            })
+
+        return sess_data
+
+
+    def add_user_to_session(self, username, session_id, session_token):
+        """
+        Add a user to given session
+
+        Args:
+            username (str): Username
+            session_id (str): Session ID
+            session_token: (str): Session token
+        
+        Returns:
+            bool, Success
+        """
+
+        user_data = self.get_user_data(username)
+        session_data = self.get_session_data(session_id)
+        if user_data is None or session_data is None:
+            return False
+        cur = self.conn.cursor()
+        cur.execute(
+            _queries['add_user_to_session'],
+            (session_id, session_token, username)
+        )
+        self.conn.commit()
+        return True
