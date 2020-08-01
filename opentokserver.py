@@ -16,36 +16,29 @@ class OpenTokServer:
         self.session = None
     
 
-    def init_session(self):
+    def create_session(self):
         """
         Create an OpenTok session, get session ID and (moderator) token
 
         Returns:
-            dict, Session data or None on error
+            str, Session ID or None on error
         """
 
         self.session = self.opentok.create_session(
             media_mode=MediaModes.routed
         )
-        return {
-            "id": self.session.session_id,
-        }
+        return self.session.session_id
 
 
-    def get_session_data(self):
+    def get_session_id(self):
         """
-        Query session data if session is active
+        Query session ID if session is active
 
         Returns:    
-            dict, Session data or None if no session is active
+            str, Session ID or None if no session is active
         """
 
-        if self.session is not None:
-            return {
-                "id": self.session.session_id
-            }
-        else:
-            return None
+        return self.session.session_id
 
 
     def generate_token(self, username):
