@@ -7,6 +7,7 @@
     <title>Fifth page</title>
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://static.opentok.com/v2/js/opentok.min.js"></script>
 </head>
 
 <body>
@@ -26,20 +27,28 @@
         <div class="all-menu">
             <div class="left-sidebar">
                 <div>
-                    <h3>Participian list</h3>
+                    <h3>Participant list</h3>
                     <hr>
                 </div>
                 <div class="list">
                     <ul>
-                        <li>First participiant</li>
+                        <!-- <li>First participiant</li>
                         <li>Second examenier</li>
                         <li>Third examenier</li>
                         <li>Fourth participiant</li>
-                        <li>Fifth participiant</li>
+                        <li>Fifth participiant</li> -->
                     </ul>
                 </div>
             </div>
-            <div class="center">
+            <div class="center" id="videos">
+                <div class="hide">
+                    <div id="subscriber" class="images"></div>
+                    <div id="publisher" class="images"></div>
+                    <!-- <img src="../imgs/post-10.jpg" alt="" class="images">
+                    <img src="../imgs/post-9.jpg" alt="" class="images"> -->
+                </div>
+            </div>
+            <!-- <div class="center">
                 <div class="center-head">
                     <img src="../imgs/post-10.jpg" alt="" class="images">
                     <img src="../imgs/post-9.jpg" alt="" class="images">
@@ -47,7 +56,7 @@
                 <div class="backpropogation">
                     <p>What is backpropogation?</p>
                 </div>
-            </div>
+            </div> -->
             <div class="right-sidebar">
 
                 <div class="session">
@@ -55,17 +64,19 @@
                 </div>
                 <hr>
                 <div class="messages">
-                    <p><span>First participiant:</span> Hello</p>
-                    <p><span>Second participiant:</span> Hello</p>
+                    <!-- <p><span>First participiant:</span> Hello</p>
+                    <p><span>Second participiant:</span> Hello</p> -->
                 </div>
                 <hr class="down">
                 <div class="review">
-                    <p>Backpropogation is a widely used algorithm in training feedforward neural networks for supervised
-                        learning.</p>
+                    <!-- <p>Backpropogation is a widely used algorithm in training feedforward neural networks for supervised
+                        learning.</p> -->
                 </div>
             </div>
         </div>
     </div>
 </body>
 
+<script type="module" src="../js/index.js"></script>
+<script type="module" src="../js/opentok_app.js"></script>
 </html>

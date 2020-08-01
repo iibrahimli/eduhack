@@ -14,6 +14,11 @@ if (initials_p) {
 }
 
 // login page
+function fail_message_colorize() {
+let fail_message = document.getElementById('login_fail');
+    fail_message.style.color = "#ff0000ff";
+}
+
 let login_button = document.getElementById('login');
 if (login_button) {
     login_button.onclick = function() {
@@ -30,14 +35,18 @@ if (login_button) {
         })
         .then(res => res.json())
         .then(data => {
+            console.log(data);
             if (data['success'] === false) { // Failed to log in
-                console.log('Incorrect username or password');
+                // console.log('Incorrect username or password');
+                document.cookie = "login_fail=" + '1'; 
+                fail_message_colorize();
             } else {
                 if (data['is_examiner']) {
                     window.location.href = website_url + '/index/index3.html';
                 } else {
                     window.location.href = website_url + '/index/index2.html';
                 }
+                document.cookie = "login_fail=" + '0';
                 document.cookie = "username=" + username;
                 document.cookie = "password=" + password;
                 document.cookie = "display_name=" + data['display_name'];

@@ -45,13 +45,13 @@
 }
 .absolute {
   font-weight: bold;
-  position: absolute;
+  /* position: absolute; */
   right: 140px;
   top: 70px;
   right: 302px;
   font-size: 14px;
-  color: #fa1616;
-  display: none;
+  color: #ff000000;
+  /* display: none; */
 }
 .menu { 
     background: url(../imgs/Abract01.png);
@@ -259,7 +259,7 @@ ul li{
 }
 
 .right-sidebar .session {
-    margin: 20px;
+    /* margin: 20px; */
 }
 .right-sidebar .messages {
     margin: 10px;
@@ -274,4 +274,5 @@ ul li{
 
 #session_id {
     word-wrap: break-word;
+    padding: 10px;
 }
