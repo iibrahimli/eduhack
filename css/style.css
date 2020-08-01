@@ -6,25 +6,29 @@
 }
 
 .header {
-    background-color: blue;
+    background-color: #1177FF;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 15vh;
+
 }
 .logo {
     margin: 20px 30px;
 }
-.logo p {
-    font-size: 45px;
-    color: white;
+.logo-eduhack {
+    width: 100px;
+    height: 64px;
+    margin-left: 4vh;
+    margin-top: 5px;
 }
 .inputs {
-    margin: 30px;
+    margin: 8vh;
 }
 .inputs input {
     border-radius: 5px;
     height: 25px;
+    padding: 3px;
 }
 .login {
     height: 25px;
@@ -32,6 +36,22 @@
     background-color: white;
     color: black;
     cursor: pointer;
+    font-size: 12px;
+    border: none;
+    transition: .2s linear;
+}
+.login:hover {
+    box-shadow: 200px 0 0 0 silver inset;
+}
+.absolute {
+  font-weight: bold;
+  position: absolute;
+  right: 140px;
+  top: 70px;
+  right: 302px;
+  font-size: 14px;
+  color: #fa1616;
+  display: none;
 }
 .menu { 
     background: url(../imgs/Abract01.png);
@@ -41,20 +61,23 @@
     width: 100vw;
     background-position: right;
     background-color: #e4e3e3;
-    display: flex;
-
+    display: flex;  
+    
 }
 .content {
     width: 50vw;
     background-color: rgba(255, 255, 255, 0.8);
     height: 60vh;
-    margin: 5vh;
+    margin: 5vh 5vh 5vh 13vh;
+    overflow-x: hidden;
+    box-shadow: 4px 3px 2px 1px #bbbbbb;
+    
 }
 .content p{
     padding: 40px;
 }
 .footer {
-    background-color: blue;
+    background-color: #1177FF;
     height: 15vh;
 }
 
@@ -66,14 +89,15 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    margin-right: 4vh;
 }
 .profile-p{
     color: white;
     font-size: 20px;
 }
 .circle {
-    width: 70px;
-    height: 70px;
+    width: 65px;
+    height: 65px;
     background-color: white;
     margin: 30px 30px 30px 15px;
     border-radius: 100%;
@@ -94,19 +118,22 @@
     justify-content: center;
     align-items: center;
     background-color: #e4e3e3;
+
 }
 
 .join {
+    box-shadow: 4px 3px 2px 1px #bbbbbb;
     display: flex;
     background-color: white;
     flex-direction: column;
-    padding: 20px;
+    padding: 50px;
     width: 70vh;
     align-items: center;
 }
 .join p{
     text-align: center;
     margin: 10px;
+
 }
 .join input {
     margin: 5px;
@@ -120,14 +147,18 @@
     border: none;
     color: white;
     cursor: pointer;
-
+    margin-top: 10px;
+    transition: .2s linear;
 }
-
+.join .submit:hover {
+    box-shadow: 200px 0 0 0 #184d47 inset;
+}
+/* #438a5e */
 
 /* ----------------------------------------THIRD PAGE ----------------------------------------------*/
 
-hr {
-    /* width: 350px; */
+.join hr {
+    width: 370px;
     margin: 15px;
 }
 
@@ -136,43 +167,65 @@ hr {
 .all-menu {
     display: flex;
     flex-direction: row;
-    background-color: #e4e3e3;
+    background-color: #e4e3e3 ;
 }
 .left-sidebar {
     display: flex;
     flex-direction: column;
     background-color: white;
     height: 85vh;
-    padding: 15px;
-    width: 18vw;
+    /* padding: 15px; */
+    width: 20vw;
+    box-shadow: 4px 3px 2px 1px #bbbbbb;
 }
 h3 {
     text-align: center;
+    margin: 10px;
 }
-hr {
-    /* width: 190px; */
+.left-sidebar hr {
+    margin: 0px;
+}
+.list {
     margin: 5px;
 }
 ul li{
     list-style-type: none;
     margin: 10px;
+    text-align: left;
 }
 .center {
-    width: 50vw;
+    width: 49vw;
     background-color: white;
     height: 75vh;
     margin: 5vh;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 4px 3px 2px 1px #bbbbbb;
 }
-.hide { 
+.center-head { 
     display: flex;
     justify-content: space-evenly;
 }
-
-.center .hide {
+.center-head .images {
+    width: 200px;
+    height: 136px;
+}
+.center .center-head {
     width: 100%;
-
     height: 30%;
 }
+.backpropogation {
+    height: 35vh;
+    background-color: #e4e3e3;
+    width: 80%;
+    /* margin: 58px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .div-heading {
     margin-top: 15px;
     background-color: #6a197d;
@@ -194,14 +247,30 @@ ul li{
     height: 5%;
 }
 .right-sidebar {
-    width: 32vw;
+    width: 31vw;
     background-color: white;
     height: 75vh;
     margin-top: 5vh;
     margin-right: 5vh;
-    padding: 25px;
+    box-shadow: 4px 3px 2px 1px #bbbbbb;
 }
 .right-sidebar span {
     font-weight: bold;
 }
+
+.right-sidebar .session {
+    margin: 20px;
+}
+.right-sidebar .messages {
+    margin: 10px;
+    font-size: 14px;
+}
+.right-sidebar .down {
+    margin-top: 175px;
+}
+.review p {
+    margin: 10px;
+}
+
+
 
