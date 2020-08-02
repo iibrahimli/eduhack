@@ -256,7 +256,7 @@ class Database:
         """
 
         user_data = self.get_user_data(username)
-        if user_data is None or session_data is None:
+        if user_data is None:
             return False
         cur = self.conn.cursor()
         cur.execute("""

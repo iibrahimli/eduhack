@@ -8,3 +8,6 @@ __pycache__/
 
 # database
 *.db
+
+# certs
+*.pem

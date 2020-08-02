@@ -322,5 +322,15 @@ def monitor():
 
     if not request or request.method != "POST":
         return abort(405)
+    
+    
 
     return jsonify({'success':True}), 200, {'ContentType':'application/json'}
+
+# from OpenSSL import SSL
+# context = ('/home/stud/certs/studium.me/cert1.pem', '/home/stud/certs/studium.me/privkey1.pem')
+# context = SSL.Context(SSL.PROTOCOL_TLSv1_2)
+# context.use_privatekey_file('/home/stud/certs/studium.me/privkey1.pem')
+# context.use_certificate_file('/home/stud/certs/studium.me/cert1.pem')
+# 
+# app.run(debug=True, ssl_context=context)
