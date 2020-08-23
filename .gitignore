@@ -1,0 +1,13 @@
+# python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# config
+*.ini
+
+# database
+*.db
+
+# certs
+*.pem
